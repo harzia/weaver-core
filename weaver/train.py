@@ -912,6 +912,8 @@ def _main(args):
                     save_root(args, output_path, data_config, scores, labels, observers)
                 else:
                     save_parquet(args, output_path, scores, labels, observers)
+    if args.tensorboard:
+        tb.close()
 
 
 def main():

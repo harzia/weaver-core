@@ -502,6 +502,9 @@ class TensorboardHelper(object):
     def __del__(self):
         self.writer.close()
 
+    def close(self):
+        self.writer.close()
+
     def write_scalars(self, write_info):
         for tag, scalar_value, global_step in write_info:
             self.writer.add_scalar(tag, scalar_value, global_step)

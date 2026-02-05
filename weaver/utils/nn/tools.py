@@ -75,7 +75,11 @@ def train_classification(
             with torch.cuda.amp.autocast(enabled=grad_scaler is not None):
                 model_output = model(*inputs)
                 logits, label, _ = _flatten_preds(model_output, label=label, mask=mask)
-                loss = loss_func(logits, label)
+                try:
+                    loss = loss_func(logits, label, model=model)
+                except TypeError:
+                    loss = loss_func(logits, label)
+
             if grad_scaler is None:
                 loss.backward()
                 opt.step()
